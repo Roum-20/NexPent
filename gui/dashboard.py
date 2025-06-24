@@ -11,7 +11,7 @@ from report import html_report, pdf_export
 
 import urllib.parse
 
-st.set_page_config(page_title="AutoVAPT Pro", layout="wide")
+st.set_page_config(page_title="NexPent", layout="wide")
 st.title("🛡️NexPent-Next generation Pentesting suit")
 
 vulns = []
