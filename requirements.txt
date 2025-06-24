@@ -1,6 +1,11 @@
 streamlit
 requests
-jinja2
-pdfkit
 beautifulsoup4
-plotly
+urllib3
+colorama
+tldextract
+python-nmap
+reportlab
+jinja2
+scapy
+nltk
