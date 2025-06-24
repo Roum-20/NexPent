@@ -16,7 +16,7 @@ pip install -r requirements.txt
 ```
 2. Launch the Streamlit Dashboard
 ```bash
-  streamlit run gui/dashboard.py
+streamlit run gui/dashboard.py
 ```
 🌍 Legally Allowed Websites for Testing
 ## Target Site	Description
