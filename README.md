@@ -19,7 +19,7 @@ pip install -r requirements.txt
   streamlit run gui/dashboard.py
 ```
 🌍 Legally Allowed Websites for Testing
-Target Site	Description
+## Target Site	Description
 https://testphp.vulnweb.com	
 ## Test SQLi, XSS, auth bypass, form injection
 https://juice-shop.herokuapp.com	OWASP Juice Shop 
