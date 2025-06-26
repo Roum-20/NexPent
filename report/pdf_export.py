@@ -2,7 +2,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import os
 
-def export_pdf_from_vulns(vulns, pdf_path="report/report.pdf"):
+def export_pdf_from_vulns(vulns, pdf_path="report/NexPent.pdf"):
     os.makedirs(os.path.dirname(pdf_path), exist_ok=True)
 
     c = canvas.Canvas(pdf_path, pagesize=letter)
