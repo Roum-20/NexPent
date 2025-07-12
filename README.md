@@ -39,7 +39,7 @@ Unsafe file uploads
 Dangerous functions like eval()
 
 ## 📄 Report Output
-After a scan, AutoVAPT Pro generates:
+After a scan, NextPent generates:
 
 report/report.html
 
