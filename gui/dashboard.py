@@ -12,7 +12,7 @@ from report import html_report, pdf_export
 import urllib.parse
 
 st.set_page_config(page_title="NexPent", layout="wide")
-st.title("🛡️NexPent-Next generation Pentesting suit")
+st.title("🔍 NexPent-Next generation Pentesting suit")
 
 vulns = []
 target = st.text_input("Enter Target URL or IP (e.g., http://example.com/page.php?id=1)")
