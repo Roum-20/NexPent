@@ -1,0 +1,12 @@
+{
+  "name": "nexpent-vulnerable-testsite",
+  "version": "1.0.0",
+  "description": "Deliberately vulnerable test website for NexPent VAPT output verification",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

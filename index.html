@@ -1,0 +1,2166 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPent &mdash; Advanced VAPT Toolkit</title>
+    <meta name="description"
+        content="NexPent is an advanced automated vulnerability assessment and penetration testing toolkit supporting web app and system scanning with PDF reporting.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Custom SVG Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300f0ff;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%237c3aed;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z' fill='url(%23g)' /%3E%3Cpath d='M30 55 L42 55 L50 35 L58 65 L66 55 L75 55' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' /%3E%3C/svg%3E">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="cyber-bg">
+        <div class="grid-overlay"></div>
+        <div class="scan-line"></div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width: 24px; height: 24px;">
+                        <defs>
+                            <linearGradient id="g-side" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                            fill="url(#g-side)"></path>
+                        <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white" stroke-width="6"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <div class="logo-pulse"></div>
+                </div>
+                <div class="logo-text">
+                    <h1>NexPent</h1>
+                    <span class="logo-sub">VAPT Toolkit v2.0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">MAIN</span>
+            <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">SCANNING</span>
+            <a href="#" class="nav-item" data-page="sqli" id="nav-sqli">
+                <i class="fas fa-database"></i>
+                <span>SQL Injection</span>
+                <span class="nav-badge critical">Critical</span>
+            </a>
+            <a href="#" class="nav-item" data-page="xss" id="nav-xss">
+                <i class="fas fa-code"></i>
+                <span>XSS Detection</span>
+                <span class="nav-badge high">High</span>
+            </a>
+            <a href="#" class="nav-item" data-page="bruteforce" id="nav-bruteforce">
+                <i class="fas fa-key"></i>
+                <span>Brute Force</span>
+            </a>
+            <a href="#" class="nav-item" data-page="codescanner" id="nav-codescanner">
+                <i class="fas fa-file-code"></i>
+                <span>Code Scanner</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">RECONNAISSANCE</span>
+            <a href="#" class="nav-item" data-page="subdomain" id="nav-subdomain">
+                <i class="fas fa-globe"></i>
+                <span>Subdomains</span>
+            </a>
+            <a href="#" class="nav-item" data-page="portscan" id="nav-portscan">
+                <i class="fas fa-ethernet"></i>
+                <span>Port Scanner</span>
+            </a>
+            <a href="#" class="nav-item" data-page="nmap" id="nav-nmap">
+                <i class="fas fa-network-wired"></i>
+                <span>Nmap Scanner</span>
+                <span class="nav-badge" style="background:rgba(239,68,68,0.15);color:#ef4444">T0-T5</span>
+            </a>
+            <a href="#" class="nav-item" data-page="cve" id="nav-cve">
+                <i class="fas fa-bug"></i>
+                <span>CVE Lookup</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">ANALYSIS</span>
+            <a href="#" class="nav-item" data-page="malware" id="nav-malware">
+                <i class="fas fa-biohazard"></i>
+                <span>Malware Analysis</span>
+                <span class="nav-badge" style="background:rgba(168,85,247,0.15);color:#a855f7">NEW</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">KNOWLEDGE</span>
+            <a href="#" class="nav-item" data-page="owasp" id="nav-owasp">
+                <i class="fas fa-shield-virus"></i>
+                <span>OWASP Top 10</span>
+                <span class="nav-badge owasp-badge">2025</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">ASSISTANT</span>
+            <a href="#" class="nav-item" data-page="aichat" id="nav-aichat">
+                <i class="fas fa-robot"></i>
+                <span>AI Chatbot</span>
+                <span class="nav-badge ai-badge">AI</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <span class="nav-label">OUTPUT</span>
+            <a href="#" class="nav-item" data-page="reports" id="nav-reports">
+                <i class="fas fa-file-code"></i>
+                <span>Reports</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="status-indicator">
+                <div class="status-dot online"></div>
+                <span>System Online</span>
+            </div>
+            <button class="sidebar-action-btn" id="sidebarMaximize" title="Full Focus Mode">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-icon"><i class="fas fa-terminal"></i></span>
+                    <span id="breadcrumbText">Dashboard</span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search modules..." id="moduleSearch">
+                </div>
+                <div class="topbar-actions">
+                    <button class="action-btn" id="notifBtn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-dot"></span>
+                    </button>
+                    <button class="action-btn" id="maximizeBtn" title="Toggle Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="action-btn" id="themeToggle" title="Toggle Light/Dark Mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <!-- Account Avatar + Dropdown -->
+                    <div class="user-avatar-wrap" id="userAvatarWrap">
+                        <div class="user-avatar" id="userAvatar" title="Account">
+                            <i class="fas fa-user-secret" id="userAvatarIcon"></i>
+                            <span class="user-avatar-initials" id="userAvatarInitials" style="display:none"></span>
+                        </div>
+                        <div class="account-dropdown" id="accountDropdown">
+                            <div class="account-dropdown-header">
+                                <div class="account-dropdown-avatar">
+                                    <span id="dropdownInitials">?</span>
+                                </div>
+                                <div>
+                                    <div class="account-dropdown-name" id="dropdownName">Guest</div>
+                                    <div class="account-dropdown-email" id="dropdownEmail">Not signed in</div>
+                                </div>
+                            </div>
+                            <div class="account-dropdown-divider"></div>
+                            <button class="account-dropdown-item" id="dropdownProfileBtn">
+                                <i class="fas fa-user-pen"></i> Edit Profile
+                            </button>
+                            <button class="account-dropdown-item" id="dropdownThemeBtn">
+                                <i class="fas fa-palette"></i> Toggle Theme
+                            </button>
+                            <div class="account-dropdown-divider"></div>
+                            <button class="account-dropdown-item logout" id="dropdownLogoutBtn">
+                                <i class="fas fa-right-from-bracket"></i> Sign Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Container -->
+        <div class="page-container">
+
+            <!-- ===== DASHBOARD PAGE ===== -->
+            <section class="page active" id="page-dashboard">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-dash" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-dash)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Dashboard
+                        </h2>
+                        <p class="page-desc">Real-time overview of vulnerability assessments and penetration tests</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-outline" id="exportDashBtn"><i class="fas fa-download"></i>
+                            Export</button>
+                        <button class="btn btn-primary" id="newScanBtn"><i class="fas fa-crosshairs"></i> New
+                            Scan</button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card" id="stat-scans">
+                        <div class="stat-icon scans"><i class="fas fa-terminal"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" data-target="0">0</span>
+                            <span class="stat-label">Total Scans <i class="fas fa-chart-line"
+                                    style="margin-left: 5px; opacity: 0.7;"></i></span>
+                        </div>
+                        <div class="stat-trend up"><i class="fas fa-arrow-up"></i> Active</div>
+                    </div>
+                    <div class="stat-card" id="stat-vulns">
+                        <div class="stat-icon vulns"><i class="fas fa-triangle-exclamation"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" data-target="0">0</span>
+                            <span class="stat-label">Vulnerabilities</span>
+                        </div>
+                        <div class="stat-trend danger"><i class="fas fa-shield-xmark"></i> Found</div>
+                    </div>
+                    <div class="stat-card" id="stat-critical">
+                        <div class="stat-icon critical"><i class="fas fa-skull-crossbones"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" data-target="0">0</span>
+                            <span class="stat-label">Critical Issues</span>
+                        </div>
+                        <div class="stat-trend danger"><i class="fas fa-fire"></i> Alert</div>
+                    </div>
+                    <div class="stat-card" id="stat-reports">
+                        <div class="stat-icon reports"><i class="fas fa-file-shield"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" data-target="0">0</span>
+                            <span class="stat-label">Reports</span>
+                        </div>
+                        <div class="stat-trend up"><i class="fas fa-check-circle"></i> Ready</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <div class="card activity-feed">
+                        <div class="card-header">
+                            <h3><i class="fas fa-wave-square"></i> Live Activity Feed</h3>
+                            <button class="btn btn-sm btn-ghost" id="clearFeedBtn">Clear</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="activityFeed">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">NexPent VAPT Toolkit v2.0 initialized</span>
+                                </div>
+                                <div class="terminal-line success">
+                                    <span class="time">[OK]</span>
+                                    <span class="msg">All modules loaded successfully</span>
+                                </div>
+                                <div class="terminal-line info">
+                                    <span class="time">[INFO]</span>
+                                    <span class="msg">Ready for vulnerability assessment</span>
+                                </div>
+                                <div class="terminal-line warning">
+                                    <span class="time">[WARN]</span>
+                                    <span class="msg">Use responsibly &mdash; authorized targets only</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card quick-actions">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Launch</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-grid">
+                                <button class="quick-btn" data-page="sqli">
+                                    <i class="fas fa-database"></i>
+                                    <span>SQLi Scan</span>
+                                </button>
+                                <button class="quick-btn" data-page="xss">
+                                    <i class="fas fa-code"></i>
+                                    <span>XSS Scan</span>
+                                </button>
+                                <button class="quick-btn" data-page="bruteforce">
+                                    <i class="fas fa-key"></i>
+                                    <span>Brute Force</span>
+                                </button>
+                                <button class="quick-btn" data-page="codescanner">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>Code Scan</span>
+                                </button>
+                                <button class="quick-btn" data-page="subdomain">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Subdomains</span>
+                                </button>
+                                <button class="quick-btn" data-page="portscan">
+                                    <i class="fas fa-ethernet"></i>
+                                    <span>Port Scan</span>
+                                </button>
+                                <button class="quick-btn" data-page="nmap">
+                                    <i class="fas fa-network-wired"></i>
+                                    <span>Nmap Scan</span>
+                                </button>
+                                <button class="quick-btn" data-page="cve">
+                                    <i class="fas fa-bug"></i>
+                                    <span>CVE Lookup</span>
+                                </button>
+                                <button class="quick-btn" data-page="malware">
+                                    <i class="fas fa-biohazard"></i>
+                                    <span>Malware</span>
+                                </button>
+                                <button class="quick-btn" data-page="reports">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>Reports</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card scan-history">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock-rotate-left"></i> Recent Scans</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="history-list" id="scanHistory">
+                                <div class="empty-state">
+                                    <i class="fas fa-satellite-dish"></i>
+                                    <p>No scans performed yet</p>
+                                    <span>Launch a module to begin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SQL INJECTION PAGE ===== -->
+            <section class="page" id="page-sqli">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-sqli" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-sqli)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            SQL Injection Scanner
+                        </h2>
+                        <p class="page-desc">Detect SQL injection vulnerabilities in GET & POST parameters</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sliders"></i> Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Target URL</label>
+                                <input type="url" class="form-input" id="sqliUrl"
+                                    placeholder="https://example.com/page?id=1">
+                            </div>
+                            <div class="form-group">
+                                <label>HTTP Method</label>
+                                <div class="toggle-group">
+                                    <button class="toggle-btn active" data-method="GET" id="sqliGetBtn">GET</button>
+                                    <button class="toggle-btn" data-method="POST" id="sqliPostBtn">POST</button>
+                                </div>
+                            </div>
+                            <div class="form-group" id="sqliPostData" style="display:none">
+                                <label>POST Data (key=value&key2=value2)</label>
+                                <input type="text" class="form-input" id="sqliPostBody"
+                                    placeholder="username=admin&password=test">
+                            </div>
+                            <div class="form-group">
+                                <label>Injection Level</label>
+                                <select class="form-select" id="sqliLevel">
+                                    <option value="basic">Basic (Common Payloads)</option>
+                                    <option value="moderate" selected>Moderate (Extended)</option>
+                                    <option value="aggressive">Aggressive (Full Suite)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Custom Payloads (one per line, optional)</label>
+                                <textarea class="form-textarea" id="sqliCustomPayloads" rows="3"
+                                    placeholder="' OR 1=1--&#10;' UNION SELECT NULL--"></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="sqliScanBtn">
+                                <i class="fas fa-crosshairs"></i> Launch SQL Injection Scan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Scan Output</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="sqliClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                                <button class="btn btn-sm btn-ghost" id="sqliCopyBtn"><i class="fas fa-copy"></i>
+                                    Copy</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="sqliOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">SQL Injection scanner ready. Configure target and launch
+                                        scan.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="sqliProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="sqliFill"></div>
+                                </div>
+                                <span class="progress-text" id="sqliProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== XSS DETECTION PAGE ===== -->
+            <section class="page" id="page-xss">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-xss" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-xss)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            XSS Detection Scanner
+                        </h2>
+                        <p class="page-desc">Detect reflected and stored Cross-Site Scripting vulnerabilities</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sliders"></i> Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Target URL</label>
+                                <input type="url" class="form-input" id="xssUrl"
+                                    placeholder="https://example.com/search?q=test">
+                            </div>
+                            <div class="form-group">
+                                <label>Parameter to Test</label>
+                                <input type="text" class="form-input" id="xssParam" placeholder="q">
+                            </div>
+                            <div class="form-group">
+                                <label>Scan Type</label>
+                                <select class="form-select" id="xssType">
+                                    <option value="reflected">Reflected XSS</option>
+                                    <option value="stored">Stored XSS</option>
+                                    <option value="dom">DOM-Based XSS</option>
+                                    <option value="all" selected>All Types</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Custom Payloads (one per line, optional)</label>
+                                <textarea class="form-textarea" id="xssCustomPayloads" rows="3"
+                                    placeholder='<script>alert(1)</script>&#10;<img src=x onerror=alert(1)>'></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="xssScanBtn">
+                                <i class="fas fa-crosshairs"></i> Launch XSS Scan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Scan Output</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="xssClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                                <button class="btn btn-sm btn-ghost" id="xssCopyBtn"><i class="fas fa-copy"></i>
+                                    Copy</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="xssOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">XSS detection scanner ready. Configure target and launch
+                                        scan.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="xssProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="xssFill"></div>
+                                </div>
+                                <span class="progress-text" id="xssProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== BRUTE FORCE PAGE ===== -->
+            <section class="page" id="page-bruteforce">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-bf" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-bf)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Login Brute-Force Tester
+                        </h2>
+                        <p class="page-desc">Test login form resistance against credential stuffing and brute-force
+                            attacks
+                        </p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sliders"></i> Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Login URL</label>
+                                <input type="url" class="form-input" id="bfUrl" placeholder="https://example.com/login">
+                            </div>
+                            <div class="form-group">
+                                <label>Username Field Name</label>
+                                <input type="text" class="form-input" id="bfUserField" placeholder="username"
+                                    value="username">
+                            </div>
+                            <div class="form-group">
+                                <label>Password Field Name</label>
+                                <input type="text" class="form-input" id="bfPassField" placeholder="password"
+                                    value="password">
+                            </div>
+                            <div class="form-group">
+                                <label>Usernames (one per line)</label>
+                                <textarea class="form-textarea" id="bfUsernames" rows="3"
+                                    placeholder="admin&#10;root&#10;user">admin
+root
+administrator
+user
+test</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Passwords (one per line)</label>
+                                <textarea class="form-textarea" id="bfPasswords" rows="3"
+                                    placeholder="password&#10;123456&#10;admin">password
+123456
+admin
+root
+letmein
+password123
+qwerty
+12345678</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Failure Indicator (text in failed login response)</label>
+                                <input type="text" class="form-input" id="bfFailText" placeholder="Invalid credentials"
+                                    value="Invalid">
+                            </div>
+                            <button class="btn btn-primary btn-block" id="bfScanBtn">
+                                <i class="fas fa-unlock"></i> Launch Brute-Force Test
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Output</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="bfClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="bfOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">Brute-force tester ready. Configure target and launch.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="bfProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="bfFill"></div>
+                                </div>
+                                <span class="progress-text" id="bfProgressText">0/0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== STATIC CODE SCANNER PAGE ===== -->
+            <section class="page" id="page-codescanner">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-code" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-code)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Static Code Scanner
+                        </h2>
+                        <p class="page-desc">Upload source code files to detect insecure patterns and vulnerabilities
+                        </p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-upload"></i> Upload Code</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="upload-zone" id="uploadZone">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                                <h4>Drag & Drop Files Here</h4>
+                                <p>or click to browse</p>
+                                <span class="upload-note">Supports: .py, .js, .php, .java, .c, .cpp, .html, .rb,
+                                    .go</span>
+                                <input type="file" id="codeFileInput" multiple
+                                    accept=".py,.js,.php,.java,.c,.cpp,.html,.rb,.go,.ts,.jsx,.tsx,.cs">
+                            </div>
+                            <div class="form-group" style="margin-top: 1rem">
+                                <label>Or paste code directly</label>
+                                <textarea class="form-textarea code-input" id="codePasteInput" rows="8"
+                                    placeholder="// Paste your source code here..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Language (for pasted code)</label>
+                                <select class="form-select" id="codeLanguage">
+                                    <option value="auto">Auto Detect</option>
+                                    <option value="python">Python</option>
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="php">PHP</option>
+                                    <option value="java">Java</option>
+                                    <option value="c">C/C++</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="codeScanBtn">
+                                <i class="fas fa-magnifying-glass-chart"></i> Analyze Code
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-shield-virus"></i> Security Analysis</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="codeClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="codeOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">Static code scanner ready. Upload or paste code to analyze.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SUBDOMAIN ENUMERATION PAGE ===== -->
+            <section class="page" id="page-subdomain">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-sub" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-sub)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Subdomain Enumeration
+                        </h2>
+                        <p class="page-desc">Discover subdomains of a target domain using multiple techniques</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sliders"></i> Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Target Domain</label>
+                                <input type="text" class="form-input" id="subDomain" placeholder="example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Wordlist Size</label>
+                                <select class="form-select" id="subWordlist">
+                                    <option value="small">Small (~100 entries)</option>
+                                    <option value="medium" selected>Medium (~500 entries)</option>
+                                    <option value="large">Large (~2000 entries)</option>
+                                </select>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="subResolve" checked>
+                                <label for="subResolve">Resolve DNS records</label>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="subScanBtn">
+                                <i class="fas fa-magnifying-glass"></i> Enumerate Subdomains
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Results</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="subClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                                <button class="btn btn-sm btn-ghost" id="subExportBtn"><i class="fas fa-download"></i>
+                                    Export</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="subOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">Subdomain enumerator ready. Enter target domain.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="subProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="subFill"></div>
+                                </div>
+                                <span class="progress-text" id="subProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== PORT SCANNER PAGE ===== -->
+            <section class="page" id="page-portscan">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-port" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-port)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Full Port Scanner
+                        </h2>
+                        <p class="page-desc">Scan all 65,535 TCP ports on target host with service detection</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-sliders"></i> Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Target Host (IP or Domain)</label>
+                                <input type="text" class="form-input" id="portHost"
+                                    placeholder="192.168.1.1 or example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Port Range</label>
+                                <div class="range-inputs">
+                                    <input type="number" class="form-input" id="portStart" placeholder="1" value="1"
+                                        min="1" max="65535">
+                                    <span class="range-sep">to</span>
+                                    <input type="number" class="form-input" id="portEnd" placeholder="65535"
+                                        value="1024" min="1" max="65535">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Scan Speed</label>
+                                <select class="form-select" id="portSpeed">
+                                    <option value="slow">Slow (Stealthy)</option>
+                                    <option value="normal" selected>Normal</option>
+                                    <option value="fast">Fast (Aggressive)</option>
+                                </select>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="portService" checked>
+                                <label for="portService">Service/Version Detection</label>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="portScanBtn">
+                                <i class="fas fa-satellite-dish"></i> Start Port Scan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Results</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="portClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="portOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[SYS]</span>
+                                    <span class="msg">Port scanner ready. Enter target host and configure scan.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="portProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="portFill"></div>
+                                </div>
+                                <span class="progress-text" id="portProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== CVE LOOKUP PAGE ===== -->
+            <section class="page" id="page-cve">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-cve" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-cve)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            CVE Lookup
+                        </h2>
+                        <p class="page-desc">Search the CVE database for known vulnerabilities and exploits</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-magnifying-glass"></i> Search</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>CVE ID or Keyword</label>
+                                <input type="text" class="form-input" id="cveQuery"
+                                    placeholder="CVE-2024-1234 or Apache Log4j">
+                            </div>
+                            <div class="form-group">
+                                <label>Severity Filter</label>
+                                <select class="form-select" id="cveSeverity">
+                                    <option value="all">All Severities</option>
+                                    <option value="critical">Critical (9.0-10.0)</option>
+                                    <option value="high">High (7.0-8.9)</option>
+                                    <option value="medium">Medium (4.0-6.9)</option>
+                                    <option value="low">Low (0.1-3.9)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Year Range</label>
+                                <div class="range-inputs">
+                                    <input type="number" class="form-input" id="cveYearStart" placeholder="2020"
+                                        value="2020" min="1999" max="2026">
+                                    <span class="range-sep">to</span>
+                                    <input type="number" class="form-input" id="cveYearEnd" placeholder="2026"
+                                        value="2026" min="1999" max="2026">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="cveLookupBtn">
+                                <i class="fas fa-search"></i> Search CVE Database
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-list-check"></i> Results</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="cveClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="cve-results" id="cveOutput">
+                                <div class="empty-state">
+                                    <i class="fas fa-database"></i>
+                                    <p>Search the CVE database</p>
+                                    <span>Enter a CVE ID or keyword to search</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== NMAP SCANNER PAGE ===== -->
+            <section class="page" id="page-nmap">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-nmap2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-nmap2)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Nmap Scanner
+                        </h2>
+                        <p class="page-desc">Advanced network reconnaissance with Nmap-style scanning — from T0
+                            (Paranoid)
+                            to T5 (Insane)</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-crosshairs"></i> Scan Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Target Host / IP</label>
+                                <input type="text" class="form-input" id="nmapTarget"
+                                    placeholder="192.168.1.1 or scanme.nmap.org">
+                            </div>
+                            <div class="form-group">
+                                <label>Scan Type</label>
+                                <select class="form-select" id="nmapScanType">
+                                    <option value="syn">SYN Scan (-sS) &mdash; Stealthy half-open</option>
+                                    <option value="connect">Connect Scan (-sT) &mdash; Full TCP</option>
+                                    <option value="udp">UDP Scan (-sU) &mdash; Find UDP services</option>
+                                    <option value="fin">FIN Scan (-sF) &mdash; Firewall evasion</option>
+                                    <option value="xmas">Xmas Scan (-sX) &mdash; FIN+PSH+URG flags</option>
+                                    <option value="ack">ACK Scan (-sA) &mdash; Map firewall rules</option>
+                                    <option value="version">Version Detect (-sV) &mdash; Service probing</option>
+                                    <option value="os">OS Detection (-O) &mdash; TCP/IP fingerprint</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Timing Template</label>
+                                <select class="form-select" id="nmapTiming">
+                                    <option value="T0">T0 &mdash; Paranoid (IDS evasion, very slow)</option>
+                                    <option value="T1">T1 &mdash; Sneaky (IDS evasion, slow)</option>
+                                    <option value="T2">T2 &mdash; Polite (Low bandwidth)</option>
+                                    <option value="T3" selected>T3 &mdash; Normal (Default)</option>
+                                    <option value="T4">T4 &mdash; Aggressive (Fast, may trigger IDS)</option>
+                                    <option value="T5">T5 &mdash; Insane (Fastest, low accuracy)</option>
+                                </select>
+                            </div>
+                            <div class="nmap-timing-indicator" id="nmapTimingBar">
+                                <div class="nmap-timing-label">Scan Intensity</div>
+                                <div class="nmap-timing-track">
+                                    <div class="nmap-timing-fill" id="nmapTimingFill" style="width:50%"></div>
+                                </div>
+                                <div class="nmap-timing-labels">
+                                    <span>Stealth</span>
+                                    <span>Speed</span>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="nmapEnableOS" checked>
+                                <label for="nmapEnableOS">OS Detection (-O)</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="nmapEnableVersion" checked>
+                                <label for="nmapEnableVersion">Service/Version Detection (-sV)</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="nmapEnableScripts">
+                                <label for="nmapEnableScripts">NSE Scripts (default + vuln)</label>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="nmapScanBtn">
+                                <i class="fas fa-satellite-dish"></i> Launch Nmap Scan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Nmap Output</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="nmapCopyBtn"><i class="fas fa-copy"></i>
+                                    Copy</button>
+                                <button class="btn btn-sm btn-ghost" id="nmapClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal-output" id="nmapOutput">
+                                <div class="terminal-line system">
+                                    <span class="time">[~]</span>
+                                    <span class="msg">Nmap scanner ready. Configure scan type and timing template, then
+                                        launch.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="nmapProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="nmapFill"></div>
+                                </div>
+                                <span class="progress-text" id="nmapProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== MALWARE ANALYSIS PAGE ===== -->
+            <section class="page" id="page-malware">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-mal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-mal)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Malware Analysis
+                        </h2>
+                        <p class="page-desc">Static file analysis engine — detect malware, suspicious patterns, and
+                            indicators of compromise</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-upload"></i> File Upload</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="malware-upload-zone" id="malwareDropZone">
+                                <div class="malware-upload-icon">
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                </div>
+                                <p class="malware-upload-text">Drag &amp; drop a file here</p>
+                                <span class="malware-upload-sub">or click to browse</span>
+                                <input type="file" id="malwareFileInput" style="display:none">
+                            </div>
+                            <div class="malware-file-info" id="malwareFileInfo" style="display:none">
+                                <div class="malware-file-preview">
+                                    <i class="fas fa-file" id="malwareFileIcon"></i>
+                                    <div>
+                                        <div class="malware-file-name" id="malwareFileName">—</div>
+                                        <div class="malware-file-size" id="malwareFileSize">—</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-ghost" id="malwareRemoveFile"><i
+                                        class="fas fa-xmark"></i></button>
+                            </div>
+                            <div class="malware-supported-types">
+                                <span class="malware-type-label">Supported:</span>
+                                <span class="malware-type-tag">.exe</span>
+                                <span class="malware-type-tag">.dll</span>
+                                <span class="malware-type-tag">.js</span>
+                                <span class="malware-type-tag">.py</span>
+                                <span class="malware-type-tag">.php</span>
+                                <span class="malware-type-tag">.pdf</span>
+                                <span class="malware-type-tag">.zip</span>
+                                <span class="malware-type-tag">.doc</span>
+                                <span class="malware-type-tag">.bat</span>
+                                <span class="malware-type-tag">.ps1</span>
+                                <span class="malware-type-tag">any</span>
+                            </div>
+                            <button class="btn btn-primary btn-block" id="malwareScanBtn" disabled>
+                                <i class="fas fa-microscope"></i> Analyze File
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card tool-output" style="display:flex;flex-direction:column">
+                        <div class="card-header">
+                            <h3><i class="fas fa-terminal"></i> Analysis Output</h3>
+                            <div class="output-actions">
+                                <button class="btn btn-sm btn-ghost" id="malwareCopyBtn"><i class="fas fa-copy"></i>
+                                    Copy</button>
+                                <button class="btn btn-sm btn-ghost" id="malwareClearBtn"><i class="fas fa-eraser"></i>
+                                    Clear</button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="flex:1;display:flex;flex-direction:column;gap:12px">
+                            <!-- Verdict Card (appears after scan) -->
+                            <div id="malwareVerdict"></div>
+                            <!-- Terminal log -->
+                            <div class="terminal-output" id="malwareOutput" style="flex:1">
+                                <div class="terminal-line system">
+                                    <span class="time">[~]</span>
+                                    <span class="msg">Malware analysis engine ready. Upload a file to begin static
+                                        analysis.</span>
+                                </div>
+                            </div>
+                            <div class="progress-container" id="malwareProgress" style="display:none">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="malwareFill"></div>
+                                </div>
+                                <span class="progress-text" id="malwareProgressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== REPORTS PAGE ===== -->
+            <section class="page" id="page-reports">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-rep" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-rep)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Report Generator
+                        </h2>
+                        <p class="page-desc">Generate comprehensive HTML & PDF vulnerability assessment reports</p>
+                    </div>
+                </div>
+                <div class="tool-layout">
+                    <div class="card tool-config">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-lines"></i> Report Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Report Title</label>
+                                <input type="text" class="form-input" id="reportTitle"
+                                    placeholder="VAPT Assessment Report" value="NexPent VAPT Assessment Report">
+                            </div>
+                            <div class="form-group">
+                                <label>Target / Client Name</label>
+                                <input type="text" class="form-input" id="reportClient" placeholder="Client Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Assessor Name</label>
+                                <input type="text" class="form-input" id="reportAssessor"
+                                    placeholder="Security Analyst">
+                            </div>
+                            <div class="form-group">
+                                <label>Include Sections</label>
+                                <div class="checkbox-grid">
+                                    <div class="form-check"><input type="checkbox" id="repSqli" checked><label
+                                            for="repSqli">SQL Injection</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repXss" checked><label
+                                            for="repXss">XSS Detection</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repBf" checked><label
+                                            for="repBf">Brute Force</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repCode" checked><label
+                                            for="repCode">Code Analysis</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repSub" checked><label
+                                            for="repSub">Subdomains</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repPort" checked><label
+                                            for="repPort">Port Scan</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repNmap" checked><label
+                                            for="repNmap">Nmap Scanner</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repMalware" checked><label
+                                            for="repMalware">Malware Analysis</label></div>
+                                    <div class="form-check"><input type="checkbox" id="repCve" checked><label
+                                            for="repCve">CVE Data</label></div>
+                                </div>
+                            </div>
+                            <div class="btn-group-vertical">
+                                <button class="btn btn-primary btn-block" id="genHtmlBtn">
+                                    <i class="fas fa-file-code"></i> Generate HTML Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card tool-output">
+                        <div class="card-header">
+                            <h3><i class="fas fa-eye"></i> Report Preview</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="report-preview" id="reportPreview">
+                                <div class="empty-state">
+                                    <i class="fas fa-file-circle-plus"></i>
+                                    <p>No report generated yet</p>
+                                    <span>Run some scans, then generate a report</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== OWASP TOP 10 PAGE ===== -->
+            <section class="page" id="page-owasp">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                                style="width: 28px; height: 28px; vertical-align: middle; margin-right: 10px;">
+                                <defs>
+                                    <linearGradient id="g-owasp" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                                    fill="url(#g-owasp)"></path>
+                                <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white"
+                                    stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            OWASP Top 10 &mdash; 2025
+                        </h2>
+                        <p class="page-desc">Explore the most critical web application security risks as defined by
+                            OWASP
+                        </p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="owasp-search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search attacks..." id="owaspSearch">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter pills -->
+                <div class="owasp-filters">
+                    <button class="owasp-filter-btn active" data-filter="all">All</button>
+                    <button class="owasp-filter-btn" data-filter="critical"><i class="fas fa-skull-crossbones"></i>
+                        Critical</button>
+                    <button class="owasp-filter-btn" data-filter="high"><i class="fas fa-fire"></i> High</button>
+                    <button class="owasp-filter-btn" data-filter="medium"><i class="fas fa-triangle-exclamation"></i>
+                        Medium</button>
+                </div>
+
+                <!-- â•â•â• OWASP SCANNER â•â•â• -->
+                <div class="owasp-scanner-panel">
+                    <div class="owasp-scanner-header">
+                        <div class="owasp-scanner-title">
+                            <i class="fas fa-radar"></i>
+                            <h3>OWASP Vulnerability Scanner</h3>
+                            <span class="owasp-scanner-badge">Live Scan</span>
+                        </div>
+                        <p class="owasp-scanner-desc">Enter a target URL to scan for OWASP Top 10:2025 vulnerabilities.
+                            The scanner runs 53 individual security checks across all 10 categories.</p>
+                    </div>
+                    <div class="owasp-scanner-controls">
+                        <div class="owasp-scanner-input-group">
+                            <i class="fas fa-crosshairs"></i>
+                            <input type="text" id="owaspTargetUrl" placeholder="https://target-site.com"
+                                autocomplete="off">
+                        </div>
+                        <button class="btn btn-primary" id="owaspScanBtn">
+                            <i class="fas fa-play"></i> Start Scan
+                        </button>
+                        <button class="btn btn-outline" id="owaspClearBtn">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                    </div>
+
+                    <!-- Progress -->
+                    <div class="owasp-scanner-progress" id="owaspProgress" style="display:none;">
+                        <div class="progress-track">
+                            <div class="progress-fill" id="owaspProgressFill" style="width:0%"></div>
+                        </div>
+                        <span class="progress-text" id="owaspProgressText">0%</span>
+                    </div>
+
+                    <!-- Terminal Output -->
+                    <div class="owasp-scanner-terminal" id="owaspTerminal"></div>
+
+                    <!-- Results Summary Cards -->
+                    <div class="owasp-results-summary" id="owaspResultsSummary" style="display:none;">
+                        <div class="owasp-results-header">
+                            <h4><i class="fas fa-chart-pie"></i> Scan Results Summary</h4>
+                        </div>
+                        <div class="owasp-results-stats" id="owaspResultsStats"></div>
+                        <div class="owasp-results-grid" id="owaspResultsGrid"></div>
+                    </div>
+                </div>
+
+                <h3 class="owasp-section-divider"><i class="fas fa-book-open"></i> OWASP Top 10 Reference Guide</h3>
+
+                <!-- OWASP Cards Grid -->
+                <div class="owasp-grid" id="owaspGrid">
+
+                    <!-- A01:2025 Broken Access Control -->
+                    <div class="owasp-card" data-severity="critical"
+                        data-keywords="broken access control authorization privilege escalation idor insecure direct object reference ssrf">
+                        <div class="owasp-card-rank">A01</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-lock-open"></i></div>
+                            <div>
+                                <h3>Broken Access Control</h3>
+                                <span class="owasp-severity critical">Critical</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Access control enforces policy so users cannot act outside their
+                            intended permissions. Failures lead to unauthorized data disclosure, modification, or
+                            destruction. In 2025 this also absorbs SSRF attacks from the prior list.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Bypassing access control checks by modifying URLs or API requests</li>
+                                    <li>Insecure Direct Object References (IDOR)</li>
+                                    <li>Missing access controls for POST, PUT, DELETE methods</li>
+                                    <li>Elevation of privilege â€” acting as admin when logged in as user</li>
+                                    <li>Server-Side Request Forgery (SSRF) â€” now merged into this category</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>GET /api/users/1234/account &rarr; change to /api/users/5678/account</code>
+                                </div>
+                                <p class="owasp-example-desc">Attacker modifies the user ID parameter to access another
+                                    user's account data. SSRF payloads (e.g., fetching internal IPs) are also covered
+                                    here.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Implement server-side access control; deny by default</li>
+                                    <li>Enforce record ownership &mdash; don't rely on user-supplied IDs</li>
+                                    <li>Validate and allowlist all user-supplied URLs (mitigate SSRF)</li>
+                                    <li>Log access control failures; alert admins on repeated failures</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A02:2025 Security Misconfiguration -->
+                    <div class="owasp-card" data-severity="critical"
+                        data-keywords="security misconfiguration default credentials open cloud storage unnecessary features error handling debug">
+                        <div class="owasp-card-rank">A02</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-sliders"></i></div>
+                            <div>
+                                <h3>Security Misconfiguration</h3>
+                                <span class="owasp-severity critical">Critical</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Security misconfiguration is the most commonly seen issue. It occurs
+                            when security settings are not defined, implemented, or maintained properly &mdash;
+                            including
+                            missing hardening, open cloud storage, misconfigured HTTP headers, or verbose error
+                            messages. </p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Unnecessary features enabled (ports, services, pages, privileges)</li>
+                                    <li>Default accounts and passwords unchanged</li>
+                                    <li>Overly informative error messages exposing stack traces</li>
+                                    <li>Missing security headers (CSP, X-Frame-Options, HSTS)</li>
+                                    <li>Cloud services with overly permissive access policies</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>Server: Apache/2.4.41 (Ubuntu) | X-Powered-By: PHP/7.2.0
+Error: PDOException in /var/www/app/db.php on line 42</code>
+                                </div>
+                                <p class="owasp-example-desc">Exposed server version info and stack traces allow
+                                    targeted
+                                    CVE exploitation and path mapping.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Implement a repeatable hardening process across all environments</li>
+                                    <li>Remove unused features, components, documentation, and samples</li>
+                                    <li>Automate configuration verification with security benchmarks</li>
+                                    <li>Segment architecture and use proper permissions on cloud services</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A03:2025 Software Supply Chain Failures (NEW) -->
+                    <div class="owasp-card" data-severity="critical"
+                        data-keywords="supply chain vulnerable components dependencies npm package third-party build pipeline ci cd sbom">
+                        <div class="owasp-card-rank">A03</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-link-slash"></i></div>
+                            <div>
+                                <h3>Software Supply Chain Failures</h3>
+                                <span class="owasp-severity critical">Critical</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">A new category expanding on "Vulnerable Components." It covers
+                            the entire software ecosystem &mdash; dependencies, build systems, CI/CD pipelines, and
+                            distribution
+                            infrastructure. Attacks like dependency confusion and malicious packages belong here.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Using components with known vulnerabilities (CVEs)</li>
+                                    <li>No Software Bill of Materials (SBOM) or dependency tracking</li>
+                                    <li>Compromised CI/CD pipelines allowing malicious code injection</li>
+                                    <li>Dependency confusion / typosquatting attacks on package registries</li>
+                                    <li>Lack of signature verification on packages and updates</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>npm install @company/utils  â† attacker publishes "company-utils" on public npm
+// Malicious post-install script exfiltrates .env, SSH keys, tokens</code>
+                                </div>
+                                <p class="owasp-example-desc">Dependency confusion attack: malicious public package
+                                    shadows a private internal package, running arbitrary code at install time.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Maintain a Software Bill of Materials (SBOM) and audit regularly</li>
+                                    <li>Pin dependency versions and verify checksums/signatures</li>
+                                    <li>Secure CI/CD pipelines with least-privilege and signed artifacts</li>
+                                    <li>Use private package registries and namespace scoping</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A04:2025 Cryptographic Failures -->
+                    <div class="owasp-card" data-severity="high"
+                        data-keywords="cryptographic failures encryption data exposure sensitive data tls ssl hashing plaintext">
+                        <div class="owasp-card-rank">A04</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-key"></i></div>
+                            <div>
+                                <h3>Cryptographic Failures</h3>
+                                <span class="owasp-severity high">High</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Failures related to cryptography which often lead to exposure of
+                            sensitive data. This includes use of weak algorithms, insufficient key management, or
+                            transmission of data in cleartext.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Transmitting data in cleartext (HTTP, SMTP, FTP)</li>
+                                    <li>Using deprecated cryptographic algorithms (MD5, SHA1, DES)</li>
+                                    <li>Weak key generation or reuse of cryptographic keys</li>
+                                    <li>Missing TLS enforcement or improper certificate validation</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>passwords stored as: MD5("password123") &rarr; 482c811da5d5b4bc...</code>
+                                </div>
+                                <p class="owasp-example-desc">Unsalted MD5 hashes are trivially cracked using rainbow
+                                    tables, exposing all user passwords.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Classify data and apply controls based on sensitivity</li>
+                                    <li>Use strong hashing with salt (bcrypt, scrypt, Argon2)</li>
+                                    <li>Enforce HTTPS everywhere with HSTS</li>
+                                    <li>Use authenticated encryption (AES-256-GCM)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A05:2025 Injection -->
+                    <div class="owasp-card" data-severity="high"
+                        data-keywords="injection sql injection xss cross-site scripting command injection ldap xpath nosql">
+                        <div class="owasp-card-rank">A05</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-syringe"></i></div>
+                            <div>
+                                <h3>Injection</h3>
+                                <span class="owasp-severity high">High</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Injection flaws occur when untrusted data is sent to an interpreter
+                            as part of a command or query. Hostile data can trick the interpreter into executing
+                            unintended commands or accessing data without authorization.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>User-supplied data not validated, filtered, or sanitized</li>
+                                    <li>Dynamic queries or non-parameterized calls without escaping</li>
+                                    <li>Hostile data used in ORM search parameters</li>
+                                    <li>SQL, NoSQL, OS, LDAP injection vectors</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>SELECT * FROM users WHERE name = '' OR '1'='1' --'</code>
+                                </div>
+                                <p class="owasp-example-desc">A classic SQL injection that bypasses authentication by
+                                    making the WHERE clause always true.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Use parameterized queries / prepared statements</li>
+                                    <li>Apply server-side input validation with allowlists</li>
+                                    <li>Escape special characters for the specific interpreter</li>
+                                    <li>Use LIMIT and other SQL controls to prevent mass disclosure</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A06:2025 Insecure Design -->
+                    <div class="owasp-card" data-severity="high"
+                        data-keywords="insecure design threat modeling architecture flaws business logic abuse design patterns">
+                        <div class="owasp-card-rank">A06</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-drafting-compass"></i></div>
+                            <div>
+                                <h3>Insecure Design</h3>
+                                <span class="owasp-severity high">High</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Insecure design represents weaknesses in the design and architecture
+                            of an application. It focuses on risks related to design flaws as opposed to implementation
+                            bugs. Even perfect implementation cannot fix an insecure design.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Missing or ineffective threat modeling during design phase</li>
+                                    <li>No secure design patterns or reference architectures used</li>
+                                    <li>Business logic flaws allowing abuse scenarios</li>
+                                    <li>Missing rate limiting on critical business flows</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>POST /checkout â€” no limit on quantity or price validation
+{"item":"premium_plan","price":0.01,"qty":999}</code>
+                                </div>
+                                <p class="owasp-example-desc">Business logic flaw: API trusts client-side price,
+                                    allowing
+                                    purchase of premium items for pennies.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Establish a secure development lifecycle with threat modeling</li>
+                                    <li>Use secure design patterns and paved-road architectures</li>
+                                    <li>Implement plausibility checks and business-logic validation server-side</li>
+                                    <li>Write unit and integration tests for abuse/misuse stories</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A07:2025 Authentication Failures -->
+                    <div class="owasp-card" data-severity="critical"
+                        data-keywords="authentication failures broken authentication session management credential stuffing brute force mfa">
+                        <div class="owasp-card-rank">A07</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-user-lock"></i></div>
+                            <div>
+                                <h3>Authentication Failures</h3>
+                                <span class="owasp-severity critical">Critical</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Weaknesses in authentication and session management allow attackers
+                            to compromise passwords, keys, or session tokens, or exploit implementation flaws to assume
+                            other users' identities temporarily or permanently.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Permits brute force or credential stuffing attacks</li>
+                                    <li>Allows default, weak, or well-known passwords</li>
+                                    <li>Missing or ineffective multi-factor authentication (MFA)</li>
+                                    <li>Session IDs exposed in URLs or not rotated after login</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>POST /login â€” 10,000 attempts with rockyou.txt wordlist
+No lockout, no CAPTCHA, no rate limit â†’ password "qwerty123" found</code>
+                                </div>
+                                <p class="owasp-example-desc">Credential stuffing using leaked password databases
+                                    against
+                                    a login endpoint with no brute-force protection.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Implement multi-factor authentication (TOTP, WebAuthn)</li>
+                                    <li>Enforce strong password policies; check against breached databases</li>
+                                    <li>Limit failed login attempts with progressive lockout</li>
+                                    <li>Use secure, server-side session management with random session IDs</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A08:2025 Software & Data Integrity Failures -->
+                    <div class="owasp-card" data-severity="high"
+                        data-keywords="integrity failures software data deserialization ci cd pipeline code integrity supply chain sri">
+                        <div class="owasp-card-rank">A08</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-file-shield"></i></div>
+                            <div>
+                                <h3>Software & Data Integrity Failures</h3>
+                                <span class="owasp-severity high">High</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Software and data integrity failures relate to code and
+                            infrastructure
+                            that does not protect against integrity violations â€” including using software from
+                            untrusted
+                            sources, insecure CI/CD pipelines, and unsafe deserialization.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Application relies on plugins or libraries from untrusted CDNs without SRI</li>
+                                    <li>Insecure CI/CD pipeline allowing unauthorized code modifications</li>
+                                    <li>Auto-update functionality without integrity verification</li>
+                                    <li>Unsafe deserialization of untrusted data leading to RCE</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>&lt;script src="https://cdn.example.com/lib.js"&gt;
+// No integrity attribute â€” compromised CDN serves malicious code</code>
+                                </div>
+                                <p class="owasp-example-desc">External script loaded without Subresource Integrity (SRI)
+                                    â€”
+                                    CDN compromise leads to supply chain attack on all users.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Use Subresource Integrity (SRI) for all external resources</li>
+                                    <li>Verify digital signatures on software and updates</li>
+                                    <li>Implement code review and approval workflows in CI/CD</li>
+                                    <li>Avoid unsafe deserialization; use safe formats like JSON</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A09:2025 Security Logging & Alerting Failures -->
+                    <div class="owasp-card" data-severity="medium"
+                        data-keywords="logging alerting monitoring failures detection breach audit incident response siem alerts">
+                        <div class="owasp-card-rank">A09</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-bell-slash"></i></div>
+                            <div>
+                                <h3>Security Logging & Alerting Failures</h3>
+                                <span class="owasp-severity medium">Medium</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">Renamed from "Logging & Monitoring Failures" to emphasize effective
+                            alerting. Without proper logging, alerting, and active response, breaches cannot be detected
+                            and attackers maintain persistence, extract data, or pivot to other systems.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Auditable events not logged (logins, failed logins, transactions)</li>
+                                    <li>Logs stored locally without centralization or backup</li>
+                                    <li>No automated alerting thresholds or escalation processes</li>
+                                    <li>Penetration testing and scanner activity does not trigger alerts</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>Attacker exfiltrates 3.2M records over 194 days â€” zero alerts triggered
+(Average breach dwell time â€” IBM Security 2024)</code>
+                                </div>
+                                <p class="owasp-example-desc">Without proper logging and alerting, attackers remain
+                                    undetected for months, exfiltrating data at will.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Log all authentication, access control, and input validation failures</li>
+                                    <li>Send logs to centralized SIEM with automated alerting rules</li>
+                                    <li>Establish effective real-time alerting for suspicious activities</li>
+                                    <li>Create and regularly test incident response and recovery plans</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- A10:2025 Mishandling of Exceptional Conditions (NEW) -->
+                    <div class="owasp-card" data-severity="medium"
+                        data-keywords="exception handling error handling crash resilience fault tolerance edge cases uncaught error boundary denial of service">
+                        <div class="owasp-card-rank">A10</div>
+                        <div class="owasp-card-header">
+                            <div class="owasp-card-icon"><i class="fas fa-burst"></i></div>
+                            <div>
+                                <h3>Mishandling of Exceptional Conditions</h3>
+                                <span class="owasp-severity medium">Medium</span>
+                            </div>
+                        </div>
+                        <p class="owasp-card-desc">A new category for 2025 highlighting the significance of secure
+                            error handling and system resilience. Applications that fail to properly handle unexpected
+                            inputs, resource exhaustion, or edge cases can crash, leak data, or become exploitable.</p>
+                        <div class="owasp-card-details">
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-crosshairs"></i> Risk Factors</h4>
+                                <ul>
+                                    <li>Uncaught exceptions exposing stack traces, file paths, or DB queries</li>
+                                    <li>Missing error boundaries causing cascading application failures</li>
+                                    <li>Improper handling of null, empty, or oversized inputs</li>
+                                    <li>Resource exhaustion (memory, file handles, connections) not mitigated</li>
+                                    <li>Inconsistent error responses revealing application internals</li>
+                                </ul>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-bomb"></i> Attack Examples</h4>
+                                <div class="owasp-code-example">
+                                    <code>POST /api/upload â€” Content-Length: 999999999999
+Server: java.lang.OutOfMemoryError â†’ full stack trace + internal paths
+// Application crashes, denying service to all users</code>
+                                </div>
+                                <p class="owasp-example-desc">Oversized request causes unhandled memory exhaustion,
+                                    crashing the server and leaking internal diagnostic information.</p>
+                            </div>
+                            <div class="owasp-detail-section">
+                                <h4><i class="fas fa-wrench"></i> Remediation</h4>
+                                <ul class="owasp-remediation">
+                                    <li>Implement global error handlers with generic user-facing messages</li>
+                                    <li>Set resource limits (max upload size, connection pools, timeouts)</li>
+                                    <li>Use error boundaries and circuit breakers for graceful degradation</li>
+                                    <li>Test with fuzzing, edge cases, and chaos engineering</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="owasp-expand-btn"
+                            onclick="this.closest('.owasp-card').classList.toggle('expanded')">
+                            <span class="expand-text">View Details</span>
+                            <span class="collapse-text">Hide Details</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- OWASP Footer -->
+                <div class="owasp-footer">
+                    <p><i class="fas fa-info-circle"></i> Based on <strong>OWASP Top 10 &mdash; 2025</strong> | <a
+                            href="https://owasp.org/Top10/" target="_blank"
+                            rel="noopener noreferrer">owasp.org/Top10</a>
+                    </p>
+                </div>
+            </section>
+
+            <!-- ===== AI CHATBOT PAGE ===== -->
+            <section class="page" id="page-aichat">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title"><i class="fas fa-robot"></i> AI Security Chatbot</h2>
+                        <p class="page-desc">Get intelligent remediation advice for detected attacks and vulnerabilities
+                        </p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-outline" id="aiAnalyzeScanBtn"><i class="fas fa-chart-pie"></i> Analyze
+                            My Scans</button>
+                        <button class="btn btn-outline" id="aiClearChatBtn"><i class="fas fa-eraser"></i> Clear
+                            Chat</button>
+                    </div>
+                </div>
+
+                <div class="ai-chat-container">
+                    <div class="ai-chat-main">
+                        <!-- Chat Messages Area -->
+                        <div class="ai-chat-messages" id="aiChatMessages">
+                            <!-- Welcome Message -->
+                            <div class="ai-message ai-bot-message ai-welcome-msg">
+                                <div class="ai-avatar">
+                                    <i class="fas fa-robot"></i>
+                                    <div class="ai-avatar-pulse"></div>
+                                </div>
+                                <div class="ai-msg-content">
+                                    <div class="ai-msg-header">
+                                        <span class="ai-msg-name">NexPent AI</span>
+                                        <span class="ai-msg-time">Now</span>
+                                    </div>
+                                    <div class="ai-msg-body">
+                                        <p>Welcome, operator! I'm <strong>NexPent AI</strong> &mdash; your cybersecurity
+                                            defense advisor. 🛡️</p>
+                                        <p>I can help you with:</p>
+                                        <div class="ai-welcome-features">
+                                            <div class="ai-feature-item"><i class="fas fa-bug"></i> Attack remediation
+                                                solutions</div>
+                                            <div class="ai-feature-item"><i class="fas fa-code"></i> Secure code
+                                                examples</div>
+                                            <div class="ai-feature-item"><i class="fas fa-chart-pie"></i> Scan results
+                                                analysis</div>
+                                            <div class="ai-feature-item"><i class="fas fa-shield-halved"></i> Security
+                                                best practices</div>
+                                        </div>
+                                        <p>Try asking about <em>SQL injection</em>, <em>XSS</em>, <em>brute force</em>,
+                                            or click a suggestion below!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Suggestions -->
+                        <div class="ai-suggestions" id="aiSuggestions">
+                            <button class="ai-suggestion-btn" data-query="How to fix SQL injection?"><i
+                                    class="fas fa-database"></i> SQL Injection Fix</button>
+                            <button class="ai-suggestion-btn" data-query="How to prevent XSS attacks?"><i
+                                    class="fas fa-code"></i> XSS Prevention</button>
+                            <button class="ai-suggestion-btn" data-query="How to stop brute force attacks?"><i
+                                    class="fas fa-key"></i> Brute Force Defense</button>
+                            <button class="ai-suggestion-btn" data-query="How to secure open ports?"><i
+                                    class="fas fa-ethernet"></i> Port Security</button>
+                            <button class="ai-suggestion-btn" data-query="How to protect against DDoS?"><i
+                                    class="fas fa-server"></i> DDoS Protection</button>
+                            <button class="ai-suggestion-btn" data-query="How to prevent CSRF?"><i
+                                    class="fas fa-shuffle"></i> CSRF Prevention</button>
+                            <button class="ai-suggestion-btn" data-query="How to protect against ransomware?"><i
+                                    class="fas fa-virus"></i> Ransomware Defense</button>
+                            <button class="ai-suggestion-btn" data-query="What security headers should I use?"><i
+                                    class="fas fa-shield-halved"></i> Security Headers</button>
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="ai-chat-input-area">
+                            <div class="ai-input-wrapper">
+                                <i class="fas fa-shield-virus ai-input-icon"></i>
+                                <input type="text" class="ai-chat-input" id="aiChatInput"
+                                    placeholder="Ask about any attack or vulnerability..." autocomplete="off">
+                                <button class="ai-send-btn" id="aiSendBtn" title="Send">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="ai-input-hint">
+                                <span><i class="fas fa-lightbulb"></i> Try: "How to fix SQL injection" or "Analyze my
+                                    scans"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Notification Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== AUTH MODAL ===== -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-modal" id="authModal">
+            <!-- Logo -->
+            <div class="auth-logo">
+                <div class="auth-logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width: 48px; height: 48px;">
+                        <defs>
+                            <linearGradient id="g-auth" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                            fill="url(#g-auth)"></path>
+                        <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white" stroke-width="6"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h1>NexPent</h1>
+                <p>Advanced VAPT Toolkit</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="NexAuth.showTab('login')">Sign In</button>
+                <button class="auth-tab" id="tabRegister" onclick="NexAuth.showTab('register')">Create Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form" id="loginForm" onsubmit="NexAuth.login(event)">
+                <div class="auth-field">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" placeholder="operator@nexpen t.io" required
+                        autocomplete="email">
+                </div>
+                <div class="auth-field">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="auth-pass-wrap">
+                        <input type="password" id="loginPassword" placeholder="••••••••" required
+                            autocomplete="current-password">
+                        <button type="button" class="auth-pass-toggle" onclick="NexAuth.togglePass('loginPassword')"><i
+                                class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="auth-error" id="loginError"></div>
+                <button type="submit" class="auth-submit">
+                    <i class="fas fa-right-to-bracket"></i> Sign In
+                </button>
+
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm" style="display:none" onsubmit="NexAuth.register(event)">
+                <div class="auth-field">
+                    <label><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="regName" placeholder="John Doe" required autocomplete="name">
+                </div>
+                <div class="auth-field">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="regEmail" placeholder="operator@nexpent.io" required autocomplete="email">
+                </div>
+
+                <div class="auth-field">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="auth-pass-wrap">
+                        <input type="password" id="regPassword" placeholder="Min. 6 characters" required minlength="6"
+                            autocomplete="new-password">
+                        <button type="button" class="auth-pass-toggle" onclick="NexAuth.togglePass('regPassword')"><i
+                                class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="auth-error" id="registerError"></div>
+                <button type="submit" class="auth-submit">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <p class="auth-footer">Data stored locally on this device only.</p>
+        </div>
+    </div>
+
+    <!-- ===== PROFILE EDIT MODAL ===== -->
+    <div class="auth-overlay" id="profileOverlay" style="display:none">
+        <div class="auth-modal" id="profileModal">
+            <div class="auth-logo">
+                <div class="auth-logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width: 48px; height: 48px;">
+                        <defs>
+                            <linearGradient id="g-prof" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00f0ff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 5 L15 20 V50 C15 75 50 95 50 95 C50 95 85 75 85 50 V20 L50 5 Z"
+                            fill="url(#g-prof)"></path>
+                        <path d="M30 55 L42 55 L50 35 L58 65 L66 55 L75 55" fill="none" stroke="white" stroke-width="6"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <h1>Edit Profile</h1>
+                <p>Update your account details</p>
+            </div>
+            <form class="auth-form" id="profileForm" onsubmit="NexAuth.saveProfile(event)">
+                <div class="auth-field">
+                    <label><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="profileName" placeholder="Your name" required>
+                </div>
+                <div class="auth-field">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="profileEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="auth-field">
+                    <label><i class="fas fa-lock"></i> New Password <span style="opacity:.5;font-weight:400">(leave
+                            blank to keep)</span></label>
+                    <div class="auth-pass-wrap">
+                        <input type="password" id="profilePassword" placeholder="••••••••" minlength="6"
+                            autocomplete="new-password">
+                        <button type="button" class="auth-pass-toggle"
+                            onclick="NexAuth.togglePass('profilePassword')"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <div class="auth-error" id="profileError"></div>
+                <div style="display:flex;gap:.75rem;margin-top:.5rem">
+                    <button type="button" class="auth-submit" style="background:var(--bg-elevated);flex:1"
+                        onclick="NexAuth.closeProfile()">Cancel</button>
+                    <button type="submit" class="auth-submit" style="flex:2"><i class="fas fa-floppy-disk"></i> Save
+                        Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="modules/scanner.js"></script>
+    <script src="modules/bruteforce.js"></script>
+    <script src="modules/codescanner.js"></script>
+    <script src="modules/subdomain.js"></script>
+    <script src="modules/portscanner.js"></script>
+    <script src="modules/cvelookup.js"></script>
+    <script src="modules/nmapscanner.js"></script>
+    <script src="modules/malwareanalyzer.js"></script>
+    <script src="modules/owaspscanner.js"></script>
+    <script src="modules/report.js"></script>
+    <script src="modules/aichatbot.js"></script>
+    <script src="modules/scanstore.js"></script>
+    <script src="modules/auth.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
